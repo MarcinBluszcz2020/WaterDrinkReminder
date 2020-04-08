@@ -1,0 +1,13 @@
+﻿<UserControl x:Class="WaterDrinkReminder.Notification"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:WaterDrinkReminder"
+             mc:Ignorable="d" 
+             d:DesignHeight="150" d:DesignWidth="450" Height="130" Width="350">
+    <Grid>
+        <Button Name="DrinkWaterBtn" Content="Drink water now!" HorizontalAlignment="Stretch"  VerticalAlignment="Stretch"  Click="Button_Click" Background="Orange" Foreground="White" FontWeight="Bold" FontSize="30" />
+
+    </Grid>
+</UserControl>

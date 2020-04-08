@@ -1,0 +1,16 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <UseWPF>true</UseWPF>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Notifications.Wpf" Version="0.1.1" />
+    <PackageReference Include="Notifications.Wpf.Core" Version="1.2.0" />
+    <PackageReference Include="ToastNotifications" Version="2.5.1" />
+    <PackageReference Include="ToastNotifications.Messages" Version="2.5.1" />
+  </ItemGroup>
+
+</Project>
