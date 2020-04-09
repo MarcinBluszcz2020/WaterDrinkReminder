@@ -1,19 +1,35 @@
 ﻿using GalaSoft.MvvmLight;
 using System.ComponentModel;
+using WaterDrinkReminder.Config;
 
 namespace WaterDrinkReminder
 {
     public class MainWindowViewModel : ViewModelBase
     {
 
-        public int _delay;
+        public int _notificationIntervalMinutes;
 
-        public int Delay
+        public int NotificationIntervalMinutes
         {
-            get { return _delay; }
-            set { _delay = value; 
+            get { return _notificationIntervalMinutes; }
+            set
+            {
+                _notificationIntervalMinutes = value;
                 RaisePropertyChanged();
             }
+        }
+
+        public MainWindowViewModel(Configuration configuration)
+        {
+            NotificationIntervalMinutes = configuration.NotificationIntervalMinutes;
+        }
+
+
+        public Configuration GetConfiguration()
+        {
+            var result = new Configuration();
+            result.NotificationIntervalMinutes = NotificationIntervalMinutes;
+            return result;
         }
     }
 }

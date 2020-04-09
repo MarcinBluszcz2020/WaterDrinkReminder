@@ -4,12 +4,17 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WaterDrinkReminder"
+        xmlns:tb="http://www.hardcodet.net/taskbar"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
-    <Grid>
+        Title="Water drink reminder" Height="153" Width="295">
+    <Grid >
 
-        <TextBox  Name="NumberTextBox" PreviewTextInput="NumberValidationTextBox" HorizontalAlignment="Left" Margin="36,86,0,0"  TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Text="{Binding Delay}"/>
-        <Button Content="Button" HorizontalAlignment="Left" Margin="178,80,0,0" VerticalAlignment="Top"/>
+
+        <TextBox  Name="NumberTextBox" PreviewTextInput="NumberValidationTextBox" HorizontalAlignment="Left" Margin="190,14,0,0"  TextWrapping="Wrap" VerticalAlignment="Top" Width="84" Text="{Binding NotificationIntervalMinutes}"/>
+        <Button Content="Save changes" HorizontalAlignment="Left" Margin="199,82,0,0" VerticalAlignment="Top" Click="Button_Click"/>
+        <Label Content="Notifications interval (minutes):" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Grid.ColumnSpan="2"/>
+
+
 
     </Grid>
 </Window>

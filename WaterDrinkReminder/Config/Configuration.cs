@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace WaterDrinkReminder
+namespace WaterDrinkReminder.Config
 {
     [Serializable]
     public class Configuration

@@ -13,7 +13,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using Notifications.Wpf;
+using WaterDrinkReminder.Interfaces;
 
 
 namespace WaterDrinkReminder
@@ -23,55 +23,37 @@ namespace WaterDrinkReminder
     /// </summary>
     public partial class MainWindow : Window
     {
-        NotifyExecuter _notifyExecuter;
-        NotifyProvider _notifyProvider;
+        private IConfigurationManager _configurationManager;
+        private INotificationManager _notificationManager;
         private MainWindowViewModel _viewModel;
 
-        public MainWindow()
+        public MainWindow(IConfigurationManager configurationManager, INotificationManager notificationManager)
         {
             InitializeComponent();
-            var configuration = LoadOrCreateConfiguration();
-            _viewModel = new MainWindowViewModel();
+            _configurationManager = configurationManager;
+            _notificationManager = notificationManager;
+            var configuration = configurationManager.LoadOrCreate();
+            
+            _viewModel = new MainWindowViewModel(configuration);
             this.DataContext = _viewModel;
-            _notifyProvider = new NotifyProvider();
-            _notifyExecuter = new NotifyExecuter(configuration, _notifyProvider);
+
         }
 
-
-        private void Save()
-        {
-            //save to file
-            _notifyExecuter.Dispose();
-            _notifyExecuter = new NotifyExecuter(null, _notifyProvider);
-        }
-
-        private Configuration LoadOrCreateConfiguration()
-        {
-            Configuration result;
-
-            var fileName = "config.xml";
-            var fileExists = FileHelper.FileExists(fileName);
-            if (fileExists == false)
-            {
-                var newConfiguration = new Configuration()
-                {
-                    NotificationIntervalMinutes = 10
-                };
-                FileHelper.Save(newConfiguration, fileName);
-                result = newConfiguration;
-            }
-            else
-            {
-                result = FileHelper.Load<Configuration>(fileName);
-            }
-
-            return result;
-        }
 
         private void NumberValidationTextBox(object sender, TextCompositionEventArgs e)
         {
             Regex regex = new Regex("[^0-9]+");
             e.Handled = regex.IsMatch(e.Text);
         }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            var currentConfiguration = _viewModel.GetConfiguration();
+            _configurationManager.Save(currentConfiguration);
+            _notificationManager.Update(currentConfiguration);
+            this.Close();
+        }
+
+ 
     }
 }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Hardcodet.Wpf.TaskbarNotification;
+using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
@@ -13,12 +14,22 @@ namespace WaterDrinkReminder
     /// </summary>
     public partial class App : Application
     {
-        private void Application_Startup(object sender, StartupEventArgs e)
+
+        private TaskbarIcon notifyIcon;
+
+        protected override void OnStartup(StartupEventArgs e)
         {
-            MainWindow wnd = new MainWindow();
-            if (e.Args.Length == 1)
-                MessageBox.Show("Now opening file: \n\n" + e.Args[0]);
-            wnd.Show();
+            base.OnStartup(e);
+
+            //create the notifyicon (it's a resource declared in NotifyIconResources.xaml
+            notifyIcon = (TaskbarIcon)FindResource("NotifyIcon");
         }
+
+        protected override void OnExit(ExitEventArgs e)
+        {
+            notifyIcon.Dispose(); //the icon would clean up automatically, but this is cleaner
+            base.OnExit(e);
+        }
+
     }
 }

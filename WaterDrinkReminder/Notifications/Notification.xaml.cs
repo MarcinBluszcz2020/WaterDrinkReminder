@@ -21,6 +21,9 @@ namespace WaterDrinkReminder
     {
         Timer _toggleColorTimer;
 
+        Brush _orange;
+        Brush _white;
+
         public Notification()
         {
             InitializeComponent();
@@ -28,7 +31,11 @@ namespace WaterDrinkReminder
             _toggleColorTimer.Interval = 600;
             _toggleColorTimer.Elapsed += _toggleColorTimer_Elapsed;
             _toggleColorTimer.Start();
+
+            _orange = Brushes.Orange;
+            _white = Brushes.White;
         }
+
 
         private void _toggleColorTimer_Elapsed(object sender, ElapsedEventArgs e)
         {
@@ -37,24 +44,30 @@ namespace WaterDrinkReminder
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            _toggleColorTimer.Elapsed -= _toggleColorTimer_Elapsed;
-            _toggleColorTimer.Dispose();
-            var parent = this.Parent as Notifications.Wpf.Controls.Notification;
-
-            parent.Close();
+            Close();
         }
 
-        private void ToggleColors()
+        public void ToggleColors()
         {
-            if (this.DrinkWaterBtn.Background != Brushes.Orange)
+            if (this.DrinkWaterBtn.Background != _orange)
             {
-                this.DrinkWaterBtn.Background = Brushes.Orange;
-                this.DrinkWaterBtn.Foreground = Brushes.White;
+                this.DrinkWaterBtn.Background = _orange;
+                this.DrinkWaterBtn.Foreground = _white;
             }
             else
             {
-                this.DrinkWaterBtn.Background = Brushes.White;
-                this.DrinkWaterBtn.Foreground = Brushes.Orange;
+                this.DrinkWaterBtn.Background = _white;
+                this.DrinkWaterBtn.Foreground = _orange;
+            }
+        }
+
+        public void Close()
+        {
+            var parent = this.Parent as Notifications.Wpf.Controls.Notification;
+
+            if (parent != null)
+            {
+                parent.Close();
             }
         }
     }
