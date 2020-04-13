@@ -12,6 +12,11 @@ namespace WaterDrinkReminder.RemindNotifications
         private ISequencer _sequencer;
         private INotifier _notifier;
 
+        public ISequencer Sequencer
+        {
+            get { return _sequencer; }
+        }
+
         public NotificationManager(Config.Config config)
         {
             _config = config;

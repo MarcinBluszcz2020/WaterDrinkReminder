@@ -1,6 +1,8 @@
 ﻿using System;
+using System.ComponentModel;
 using System.Windows;
 using System.Windows.Input;
+using WaterDrinkReminder.Sequencer;
 
 namespace WaterDrinkReminder
 {
@@ -9,15 +11,44 @@ namespace WaterDrinkReminder
     /// view model is assigned to the NotifyIcon in XAML. Alternatively, the startup routing
     /// in App.xaml.cs could have created this view model, and assigned it to the NotifyIcon.
     /// </summary>
-    public class NotifyIconViewModel
+    public class NotifyIconViewModel:INotifyPropertyChanged
     {
         private SettingsWindow _settingsWindow;
+        private ISequencer _sequencer;
 
-        public NotifyIconViewModel(SettingsWindow settingsWindow)
+        public NotifyIconViewModel(SettingsWindow settingsWindow, ISequencer sequencer)
         {
             _settingsWindow = settingsWindow;
+            _sequencer = sequencer;
+            sequencer.NextExecutionTimestampChanged += Sequencer_NextExecutionTimestampChanged;
+            var nextExecutionTimestamp = _sequencer.NextExecutionTimestamp.ToShortTimeString();
+            ToolTipText =
+                $"Water drink reminder{System.Environment.NewLine}Next execution time: {nextExecutionTimestamp}";
         }
 
+        private void Sequencer_NextExecutionTimestampChanged(object sender, EventArgs e)
+        {
+            var nextExecutionTimestamp = _sequencer.NextExecutionTimestamp.ToShortTimeString();
+            ToolTipText =
+                $"Water drink reminder{System.Environment.NewLine}Next execution time: {nextExecutionTimestamp}";
+        }
+
+        private string _toolTipText;
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        public string ToolTipText
+        {
+            get
+            {
+                return _toolTipText;
+            }
+            set
+            {
+                _toolTipText = value;
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("ToolTipText"));
+            }
+        }
 
         /// <summary>
         /// Shows a window, if none is already open.

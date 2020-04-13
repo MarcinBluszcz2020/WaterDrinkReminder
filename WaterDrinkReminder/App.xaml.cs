@@ -29,7 +29,7 @@ namespace WaterDrinkReminder
             var settingsWindow = new SettingsWindow(configurationManager, _notificationManager);
 
             _notifyIcon = (TaskbarIcon)FindResource("NotifyIcon");
-            _notifyIcon.DataContext = new NotifyIconViewModel(settingsWindow);
+            _notifyIcon.DataContext = new NotifyIconViewModel(settingsWindow, _notificationManager.Sequencer);
         }
 
         protected override void OnExit(ExitEventArgs e)

@@ -1,4 +1,5 @@
 ﻿using WaterDrinkReminder.Config;
+using WaterDrinkReminder.Sequencer;
 
 namespace WaterDrinkReminder.RemindNotifications
 {
@@ -6,5 +7,7 @@ namespace WaterDrinkReminder.RemindNotifications
     {
         void Update(Config.Config config);
         void Stop();
+
+        ISequencer Sequencer { get; }
     }
 }

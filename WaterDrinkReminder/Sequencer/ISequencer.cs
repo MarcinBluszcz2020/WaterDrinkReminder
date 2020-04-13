@@ -7,5 +7,7 @@ namespace WaterDrinkReminder.Sequencer
     public interface ISequencer : IDisposable
     {
         void SetInterval(TimeSpan interval);
+        DateTime NextExecutionTimestamp { get; }
+        event EventHandler NextExecutionTimestampChanged;
     }
 }
