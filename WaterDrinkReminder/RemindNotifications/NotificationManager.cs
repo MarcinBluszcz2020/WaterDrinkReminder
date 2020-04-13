@@ -2,35 +2,36 @@
 using System.Collections.Generic;
 using System.Text;
 using WaterDrinkReminder.Config;
-using WaterDrinkReminder.Interfaces;
+using WaterDrinkReminder.Sequencer;
 
-namespace WaterDrinkReminder
+namespace WaterDrinkReminder.RemindNotifications
 {
     public class NotificationManager : INotificationManager
     {
-        private Configuration _configuration;
+        private Config.Config _config;
         private ISequencer _sequencer;
         private INotifier _notifier;
 
-        public NotificationManager(Configuration configuration)
+        public NotificationManager(Config.Config config)
         {
-            _configuration = configuration;
+            _config = config;
             _notifier = new Notifier();
 
-            var interval = TimeSpan.FromMinutes(configuration.NotificationIntervalMinutes);
+            var interval = TimeSpan.FromMinutes(config.NotificationIntervalMinutes);
             _sequencer = new Sequencer.Sequencer(interval, () => _notifier.ShowNotification(interval));
         }
 
-        public void Update(Configuration configuration)
+        public void Update(Config.Config config)
         {
-            _configuration = configuration;
-            var interval = TimeSpan.FromMinutes(configuration.NotificationIntervalMinutes);
+            _config = config;
+            var interval = TimeSpan.FromMinutes(config.NotificationIntervalMinutes);
             _sequencer.SetInterval(interval);
         }
 
         public void Stop()
         {
             _sequencer.Dispose();
+            _notifier.Dispose();
         }
     }
 }

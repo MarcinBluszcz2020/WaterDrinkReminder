@@ -15,19 +15,27 @@ namespace WaterDrinkReminder
     public partial class App : Application
     {
 
-        private TaskbarIcon notifyIcon;
+        private TaskbarIcon _notifyIcon;
+        private RemindNotifications.NotificationManager _notificationManager;
 
         protected override void OnStartup(StartupEventArgs e)
         {
             base.OnStartup(e);
 
-            //create the notifyicon (it's a resource declared in NotifyIconResources.xaml
-            notifyIcon = (TaskbarIcon)FindResource("NotifyIcon");
+            var configurationManager = new WaterDrinkReminder.Config.ConfigManager();
+            var configuration = configurationManager.LoadOrCreate();
+            _notificationManager = new WaterDrinkReminder.RemindNotifications.NotificationManager(configuration);
+
+            var settingsWindow = new SettingsWindow(configurationManager, _notificationManager);
+
+            _notifyIcon = (TaskbarIcon)FindResource("NotifyIcon");
+            _notifyIcon.DataContext = new NotifyIconViewModel(settingsWindow);
         }
 
         protected override void OnExit(ExitEventArgs e)
         {
-            notifyIcon.Dispose(); //the icon would clean up automatically, but this is cleaner
+            _notificationManager.Stop();
+            _notifyIcon.Dispose(); //the icon would clean up automatically, but this is cleaner
             base.OnExit(e);
         }
 

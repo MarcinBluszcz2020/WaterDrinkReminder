@@ -12,12 +12,12 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace WaterDrinkReminder
+namespace WaterDrinkReminder.RemindNotifications
 {
     /// <summary>
     /// Interaction logic for Notification.xaml
     /// </summary>
-    public partial class Notification : UserControl
+    public partial class Notification : UserControl, IDisposable
     {
         Timer _toggleColorTimer;
 
@@ -47,7 +47,7 @@ namespace WaterDrinkReminder
             Close();
         }
 
-        public void ToggleColors()
+        private void ToggleColors()
         {
             if (this.DrinkWaterBtn.Background != _orange)
             {
@@ -67,8 +67,14 @@ namespace WaterDrinkReminder
 
             if (parent != null)
             {
-                parent.Close();
+                Dispatcher.Invoke(parent.Close);
             }
+        }
+
+        public void Dispose()
+        {
+            _toggleColorTimer.Elapsed -= _toggleColorTimer_Elapsed;
+            _toggleColorTimer.Dispose();
         }
     }
 }

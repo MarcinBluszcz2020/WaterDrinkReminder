@@ -1,23 +1,22 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using WaterDrinkReminder.Interfaces;
 
 namespace WaterDrinkReminder.Config
 {
-    public class ConfigurationManager : IConfigurationManager
+    public class ConfigManager : IConfigManager
     {
         private const string FileName = "config.xml";
 
 
-        public Configuration LoadOrCreate()
+        public Config LoadOrCreate()
         {
-            Configuration result;
+            Config result;
 
             var fileExists = FileHelper.FileExists(FileName);
             if (fileExists == false)
             {
-                var newConfiguration = new Configuration()
+                var newConfiguration = new Config()
                 {
                     NotificationIntervalMinutes = 10
                 };
@@ -26,15 +25,15 @@ namespace WaterDrinkReminder.Config
             }
             else
             {
-                result = FileHelper.Load<Configuration>(FileName);
+                result = FileHelper.Load<Config>(FileName);
             }
 
             return result;
         }
 
-        public void Save(Configuration configuration)
+        public void Save(Config config)
         {
-            FileHelper.Save(configuration, FileName);
+            FileHelper.Save(config, FileName);
         }
     }
 }

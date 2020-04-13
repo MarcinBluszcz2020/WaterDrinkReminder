@@ -4,11 +4,11 @@ using System.Text;
 using System.Timers;
 using System.Windows;
 using Notifications.Wpf;
-using WaterDrinkReminder.Interfaces;
 
-namespace WaterDrinkReminder
+
+namespace WaterDrinkReminder.RemindNotifications
 {
-    public class Notifier:INotifier
+    public class Notifier : INotifier
     {
         private Notifications.Wpf.NotificationManager _manager;
 
@@ -27,6 +27,10 @@ namespace WaterDrinkReminder
             _manager.Show(_notification, expirationTime: timeToAutoClose);
         }
 
+        public void Dispose()
+        {
+            _notification.Dispose();
+        }
 
     }
 }

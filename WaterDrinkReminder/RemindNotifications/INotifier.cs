@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace WaterDrinkReminder.Interfaces
+namespace WaterDrinkReminder.RemindNotifications
 {
-    public interface INotifier
+    public interface INotifier : IDisposable
     {
         void ShowNotification(TimeSpan timeToAutoClose);
     }

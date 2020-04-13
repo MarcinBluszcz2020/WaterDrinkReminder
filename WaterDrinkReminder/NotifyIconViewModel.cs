@@ -11,16 +11,11 @@ namespace WaterDrinkReminder
     /// </summary>
     public class NotifyIconViewModel
     {
-        WaterDrinkReminder.Config.ConfigurationManager _configurationManager;
-        private WaterDrinkReminder.NotificationManager _notificationManager;
-        private MainWindow _mainWindow;
+        private SettingsWindow _settingsWindow;
 
-        public NotifyIconViewModel()
+        public NotifyIconViewModel(SettingsWindow settingsWindow)
         {
-            _configurationManager = new WaterDrinkReminder.Config.ConfigurationManager();
-            var configuration = _configurationManager.LoadOrCreate();
-            _notificationManager =
-                new WaterDrinkReminder.NotificationManager(configuration);
+            _settingsWindow = settingsWindow;
         }
 
 
@@ -33,27 +28,13 @@ namespace WaterDrinkReminder
             {
                 return new DelegateCommand
                 {
-                    CanExecuteFunc = () => !(Application.Current.MainWindow is MainWindow),
+                    CanExecuteFunc = () => true,
                     CommandAction = () =>
                     {
-                        Application.Current.MainWindow = new MainWindow(_configurationManager, _notificationManager);
+                        Application.Current.MainWindow = _settingsWindow;
                         Application.Current.MainWindow.Show();
+                        Application.Current.MainWindow.WindowState = WindowState.Normal;
                     }
-                };
-            }
-        }
-
-        /// <summary>
-        /// Hides the main window. This command is only enabled if a window is open.
-        /// </summary>
-        public ICommand HideWindowCommand
-        {
-            get
-            {
-                return new DelegateCommand
-                {
-                    CommandAction = () => Application.Current.MainWindow.Close(),
-                    CanExecuteFunc = () => Application.Current.MainWindow is MainWindow
                 };
             }
         }
@@ -68,11 +49,8 @@ namespace WaterDrinkReminder
             {
                 return new DelegateCommand
                 {
-                    CommandAction = () =>
-{
-_notificationManager.Stop();
-Application.Current.Shutdown();
-}
+                    CommandAction = () => Application.Current.Shutdown()
+
                 };
             }
         }

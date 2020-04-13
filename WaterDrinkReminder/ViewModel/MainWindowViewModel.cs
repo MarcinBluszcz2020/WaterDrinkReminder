@@ -19,15 +19,15 @@ namespace WaterDrinkReminder
             }
         }
 
-        public MainWindowViewModel(Configuration configuration)
+        public MainWindowViewModel(Config.Config config)
         {
-            NotificationIntervalMinutes = configuration.NotificationIntervalMinutes;
+            NotificationIntervalMinutes = config.NotificationIntervalMinutes;
         }
 
 
-        public Configuration GetConfiguration()
+        public Config.Config GetConfiguration()
         {
-            var result = new Configuration();
+            var result = new Config.Config();
             result.NotificationIntervalMinutes = NotificationIntervalMinutes;
             return result;
         }

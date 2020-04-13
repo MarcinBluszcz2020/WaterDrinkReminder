@@ -5,7 +5,7 @@ using System.Text;
 namespace WaterDrinkReminder.Config
 {
     [Serializable]
-    public class Configuration
+    public class Config
     {
         public int NotificationIntervalMinutes { get; set; }
         public bool UseBlinking { get; set; }
