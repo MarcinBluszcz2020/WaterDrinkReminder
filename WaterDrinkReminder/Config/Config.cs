@@ -8,6 +8,5 @@ namespace WaterDrinkReminder.Config
     public class Config
     {
         public int NotificationIntervalMinutes { get; set; }
-        public bool UseBlinking { get; set; }
     }
 }
