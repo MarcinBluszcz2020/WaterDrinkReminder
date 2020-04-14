@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Timers;
 using System.Windows;
+using System.Windows.Media;
 using Notifications.Wpf;
 
 
@@ -14,11 +15,24 @@ namespace WaterDrinkReminder.RemindNotifications
 
         private Notification _notification;
 
-        public Notifier()
+        public Notifier(Config.Config config)
         {
             _manager = new Notifications.Wpf.NotificationManager();
 
-            _notification = new Notification();
+            Color? backColor = Config.Config.Parse(config.BackgroundColorString);
+            Color? fontColor = Config.Config.Parse(config.FontColorString);
+
+            if (backColor.HasValue == false)
+            {
+                backColor = Colors.Orange;
+            }
+
+            if (fontColor.HasValue == false)
+            {
+                fontColor = Colors.White;
+            }
+
+            _notification = new Notification(backColor.Value, fontColor.Value);
         }
 
         public void ShowNotification(TimeSpan timeToAutoClose)
@@ -32,5 +46,23 @@ namespace WaterDrinkReminder.RemindNotifications
             _notification.Dispose();
         }
 
+
+        public void Update(Config.Config config)
+        {
+            Color? backColor = Config.Config.Parse(config.BackgroundColorString);
+            Color? fontColor = Config.Config.Parse(config.FontColorString);
+
+            if (backColor.HasValue == false)
+            {
+                backColor = Colors.Orange;
+            }
+
+            if (fontColor.HasValue == false)
+            {
+                fontColor = Colors.White;
+            }
+
+            _notification.Update(backColor.Value, fontColor.Value);
+        }
     }
 }

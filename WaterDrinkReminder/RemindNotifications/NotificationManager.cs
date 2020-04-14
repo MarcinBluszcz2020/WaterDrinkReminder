@@ -20,7 +20,7 @@ namespace WaterDrinkReminder.RemindNotifications
         public NotificationManager(Config.Config config)
         {
             _config = config;
-            _notifier = new Notifier();
+            _notifier = new Notifier(config);
 
             var interval = TimeSpan.FromMinutes(config.NotificationIntervalMinutes);
             _sequencer = new Sequencer.Sequencer(interval, () => _notifier.ShowNotification(interval));
@@ -31,6 +31,7 @@ namespace WaterDrinkReminder.RemindNotifications
             _config = config;
             var interval = TimeSpan.FromMinutes(config.NotificationIntervalMinutes);
             _sequencer.SetInterval(interval);
+            _notifier.Update(config);
         }
 
         public void Stop()

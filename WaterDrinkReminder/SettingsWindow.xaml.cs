@@ -27,7 +27,7 @@ namespace WaterDrinkReminder
     {
         private IConfigManager _configurationManager;
         private INotificationManager _notificationManager;
-        private MainWindowViewModel _viewModel;
+        private SettingsWindowViewModel _viewModel;
 
         public SettingsWindow(IConfigManager configurationManager, INotificationManager notificationManager)
         {
@@ -36,7 +36,7 @@ namespace WaterDrinkReminder
             _notificationManager = notificationManager;
             var configuration = configurationManager.LoadOrCreate();
 
-            _viewModel = new MainWindowViewModel(configuration);
+            _viewModel = new SettingsWindowViewModel(configuration);
             this.DataContext = _viewModel;
             this.Closing += SettingsWindow_Closing;
         }
@@ -60,7 +60,6 @@ namespace WaterDrinkReminder
             _notificationManager.Update(currentConfiguration);
             this.Hide();
         }
-
 
     }
 }

@@ -5,17 +5,72 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WaterDrinkReminder"
         xmlns:tb="http://www.hardcodet.net/taskbar"
+        xmlns:xctk="http://schemas/xceed.com/wpf/xaml/toolkit"
+        xmlns:toolkit="http://schemas.xceed.com/wpf/xaml/toolkit"
         mc:Ignorable="d"
-        Title="Water drink reminder" Height="150" Width="300"
+        Title="Water drink reminder" Height="240" Width="389"
         Icon="/glassicon.ico">
     <Grid >
 
+        <Grid.RowDefinitions>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="50"/>
+       
+            <RowDefinition Height="50"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="3*"/>
+            <ColumnDefinition Width="2*"/>
+        </Grid.ColumnDefinitions>
+        <Label Content="Notifications interval (minutes):" HorizontalAlignment="Left" Margin="10" VerticalAlignment="Center" Grid.ColumnSpan="2"/>
 
-        <TextBox  Name="NumberTextBox" PreviewTextInput="NumberValidationTextBox" HorizontalAlignment="Left" Margin="190,14,0,0"  TextWrapping="Wrap" VerticalAlignment="Top" Width="84" Text="{Binding NotificationIntervalMinutes}"/>
-        <Label Content="Notifications interval (minutes):" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Grid.ColumnSpan="2"/>
-        <Button Content="Save changes" HorizontalAlignment="Left" Margin="190,60,0,0" Padding="5" VerticalAlignment="Top" Click="Button_Click"/>
+        <TextBox Grid.Column="1" 
+                 Name="NumberTextBox" 
+                 PreviewTextInput="NumberValidationTextBox" 
+                 HorizontalAlignment="Left"  
+                 TextWrapping="Wrap" 
+                 VerticalAlignment="Center" 
+                 Width="84" 
+                 Margin="10"
+                 Text="{Binding NotificationIntervalMinutes}"/>
+
+        <Label Grid.Row="1"
+            Content="Notifications first color:" 
+            HorizontalAlignment="Left" 
+            Margin="10" 
+            VerticalAlignment="Center" 
+            />
+
+        <toolkit:ColorPicker 
+            Grid.Row="1" 
+            Grid.Column="1" 
+            Height="25"
+            Margin="10"
+            Name="BackgroundColorPicker" 
+            DisplayColorAndName="True" 
+            AvailableColorsSortingMode="HueSaturationBrightness"  
+            SelectedColor="{Binding BackgroundColor}"/>
 
 
+        <Label Grid.Row="2"
+               Content="Notifications second color:" 
+               HorizontalAlignment="Left" 
+               Margin="10" 
+               VerticalAlignment="Center" 
+        />
+
+        <toolkit:ColorPicker 
+            Grid.Row="2" 
+            Grid.Column="1" 
+            Height="25"
+            Margin="10"
+            Name="FontColorPicker" 
+            DisplayColorAndName="True" 
+            AvailableColorsSortingMode="HueSaturationBrightness" 
+            SelectedColor="{Binding FontColor}"/>
+
+        <Button Grid.Row="3" Grid.Column="1" Content="Save changes" HorizontalAlignment="Right" Margin="10" Padding="5" VerticalAlignment="Center" Click="Button_Click"/>
 
     </Grid>
 </Window>

@@ -21,10 +21,10 @@ namespace WaterDrinkReminder.RemindNotifications
     {
         Timer _toggleColorTimer;
 
-        Brush _orange;
-        Brush _white;
+        Brush _backColor;
+        Brush _fontColor;
 
-        public Notification()
+        public Notification(Color backgroundColor, Color fontColor)
         {
             InitializeComponent();
             _toggleColorTimer = new Timer();
@@ -32,8 +32,8 @@ namespace WaterDrinkReminder.RemindNotifications
             _toggleColorTimer.Elapsed += _toggleColorTimer_Elapsed;
             _toggleColorTimer.Start();
 
-            _orange = Brushes.Orange;
-            _white = Brushes.White;
+            _backColor = new SolidColorBrush(backgroundColor);
+            _fontColor = new SolidColorBrush(fontColor);
         }
 
 
@@ -49,15 +49,15 @@ namespace WaterDrinkReminder.RemindNotifications
 
         private void ToggleColors()
         {
-            if (this.DrinkWaterBtn.Background != _orange)
+            if (this.DrinkWaterBtn.Background != _backColor)
             {
-                this.DrinkWaterBtn.Background = _orange;
-                this.DrinkWaterBtn.Foreground = _white;
+                this.DrinkWaterBtn.Background = _backColor;
+                this.DrinkWaterBtn.Foreground = _fontColor;
             }
             else
             {
-                this.DrinkWaterBtn.Background = _white;
-                this.DrinkWaterBtn.Foreground = _orange;
+                this.DrinkWaterBtn.Background = _fontColor;
+                this.DrinkWaterBtn.Foreground = _backColor;
             }
         }
 
@@ -75,6 +75,12 @@ namespace WaterDrinkReminder.RemindNotifications
         {
             _toggleColorTimer.Elapsed -= _toggleColorTimer_Elapsed;
             _toggleColorTimer.Dispose();
+        }
+
+        public void Update(Color backgroundColor, Color fontColor)
+        {
+            _backColor = new SolidColorBrush(backgroundColor);
+            _fontColor = new SolidColorBrush(fontColor);
         }
     }
 }

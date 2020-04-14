@@ -18,7 +18,9 @@ namespace WaterDrinkReminder.Config
             {
                 var newConfiguration = new Config()
                 {
-                    NotificationIntervalMinutes = 10
+                    NotificationIntervalMinutes = 10,
+                    BackgroundColorString = "#FFFFA500",
+                    FontColorString = "#FFFFFFFF"
                 };
                 FileHelper.Save(newConfiguration, FileName);
                 result = newConfiguration;

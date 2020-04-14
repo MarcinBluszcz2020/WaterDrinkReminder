@@ -7,5 +7,6 @@ namespace WaterDrinkReminder.RemindNotifications
     public interface INotifier : IDisposable
     {
         void ShowNotification(TimeSpan timeToAutoClose);
+        void Update(Config.Config config);
     }
 }
